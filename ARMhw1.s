@@ -1,7 +1,7 @@
 @ File:    ARMhw1.s
 @ Author:  John Ingram
 @ Author email: jsi0004@uah.edu
-@ Course: CS309 Fall 2021
+@ Course: CS309-01 Fall 2021
 @ Purpose: Modify Hello world to complete Homework 1. 
 @ History: 
 @    04-Mar-2019 Added comments to help with printf and svc calls.
@@ -73,7 +73,10 @@ main:        @Must use this label where to start executing the code.
 string1: .asciz "John Samuel Ingram\n"  @Length 0x0C; Labels end with a :
 
 .balign 4   @ Force a word boundry
-string2: .asciz "Hello World.\n" @Length 0x0E
+string2: .asciz "jsi0004@uah.edu\n"
+
+.balign 4   @ Force a word boundry
+string3: .asciz "This is my first ARM Assembly program for CS309-01 Fall 2019\n"
 @  ^       ^
 @ Label It's in asci, and you should null terminate it
 
