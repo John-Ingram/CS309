@@ -1,17 +1,20 @@
 @ File:    ARMhw1.s
 @ Author:  John Ingram
+@ Author email: jsi0004@uah.edu
+@ Course: CS309 Fall 2021
 @ Purpose: Modify Hello world to complete Homework 1. 
 @ History: 
 @    04-Mar-2019 Added comments to help with printf and svc calls.
 @    15-Sep-2019 Added comments on which registers are changed
 @           when there is a call to printf or SVC.
+@    For more history, see https://github.com/John-Ingram/CS309/commits/main/ARMhw1.s
 @
 @ Use these commands to assemble, link, run and debug the program
 @
-@  as -o helloworld.o helloworld.s
-@  gcc -o helloworld helloworld.o
-@ ./helloworld ;echo $?
-@ gdb --args ./helloworld
+@  as -o ARMhw1.o ARMhw1.s
+@  gcc -o ARMhw1 ARMhw1.o
+@ ./ARMhw1 ;echo $?
+@ gdb --args ./ARMhw1
 @
 @ If you get an error from the as (assembler) command AND it does not call out a line
 @ number, check to make sure the current default directory contains the file.
@@ -41,7 +44,7 @@ main:        @Must use this label where to start executing the code.
 
     MOV   r7, #0x04    @ A 4 is a write command and has to be in r7., # means what follows is a literal value.
     MOV   r0, #0x01    @ 01 is the STD (standard) output device. 
-    MOV   r2, #0x0C    @ Length of string to print (in Hex).
+    MOV   r2, #0x13    @ Length of string to print (in Hex).
     LDR   r1, =string1 @ Put address of the start of the string in r1
     SVC   0            @ Do the system call
 
@@ -67,7 +70,7 @@ main:        @Must use this label where to start executing the code.
 
 .data       @ Lets the OS know it is OK to write to this area of memory. 
 .balign 4   @ Force a word boundry.
-string1: .asciz "Hello World\n"  @Length 0x0C; Labels end with a :
+string1: .asciz "John Samuel Ingram\n"  @Length 0x0C; Labels end with a :
 
 .balign 4   @ Force a word boundry
 string2: .asciz "Hello World.\n" @Length 0x0E
