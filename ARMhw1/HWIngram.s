@@ -1,4 +1,4 @@
-@ File:    HWIngram.s.s
+@ File:    HWIngram.s
 @ Author:  John Ingram
 @ Author email: jsi0004@uah.edu
 @ Course: CS309-01 Fall 2021
@@ -7,14 +7,14 @@
 @    04-Mar-2019 Added comments to help with printf and svc calls.
 @    15-Sep-2019 Added comments on which registers are changed
 @           when there is a call to printf or SVC.
-@    For more history, see https://github.com/John-Ingram/CS309/commits/main/ARMhw1/HWIngram.s.s
+@    For more history, see https://github.com/John-Ingram/CS309/commits/main/HWIngram.s
 @
 @ Use these commands to assemble, link, run and debug the program
 @
-@  as -o HWIngram.s.o HWIngram.s.s
-@  gcc -o HWIngram.s HWIngram.s.o
-@ ./HWIngram.s ;echo $?
-@ gdb --args ./HWIngram.s
+@  as -o HWIngram.o HWIngram.s
+@  gcc -o HWIngram HWIngram.o
+@ ./HWIngram ;echo $?
+@ gdb --args ./HWIngram
 @
 @ If you get an error from the as (assembler) command AND it does not call out a line
 @ number, check to make sure the current default directory contains the file.
