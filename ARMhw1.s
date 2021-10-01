@@ -85,7 +85,7 @@ string1: .asciz "John Samuel Ingram\n"  @Length 0x0C; Labels end with a :
 string2: .asciz "jsi0004@uah.edu\n"
 
 .balign 4   @ Force a word boundry
-string3: .asciz "This is my first ARM Assembly program for CS309-01 Fall 2019\n" @Length 0x3D
+string3: .asciz "This is my first ARM Assembly program for CS309-01 Fall 2020\n" @Length 0x3D
 @  ^       ^
 @ Label It's in asci, and you should null terminate it
 
