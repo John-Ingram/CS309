@@ -32,7 +32,7 @@
 .global main @<-- This '.global' is a directive to the assembler
 main:        @Must use this label where to start executing the code. 
 
-@ Part 1 - Print hello world message using the system call.
+@ Part 1 - Print Full name using the system call.
 @
 @ Use system call to write string to the STDIO
 @   r0 - Must contain 1 to output to the standard output device (screen).
@@ -44,14 +44,14 @@ main:        @Must use this label where to start executing the code.
 
     MOV   r7, #0x04    @ A 4 is a write command and has to be in r7., # means what follows is a literal value.
     MOV   r0, #0x01    @ 01 is the STD (standard) output device. 
-    MOV   r2, #0x13    @ Length of string to print (in Hex).
     LDR   r1, =string1 @ Put address of the start of the string in r1
+    MOV   r2, #0x13    @ Length of string to print (in Hex).
     SVC   0            @ Do the system call
 
 @ When using this method to print to the screen none of the registers
 @ (r0 - r15) are changed. 
 
-@ Part 2 - Print hello world message using the C function printf
+@ Part 2 - Print email address using the C function printf
 @
 @ Use the C library call printf to print the second string. Details on 
 @ how to use this function is given in the .data section. 
@@ -60,6 +60,15 @@ main:        @Must use this label where to start executing the code.
 @
     LDR  r0, =string2 @ Put address of string in r0
     BL   printf       @ Make the call to printf
+
+@ Part 3 - Print the string This is my first ARM Assembly program for CS309-01 Fall 2019 using the system call.
+
+    MOV   r7, #0x04    @ A 4 is a write command and has to be in r7., # means what follows is a literal value.
+    MOV   r0, #0x01    @ 01 is the STD (standard) output device. 
+    LDR   r1, =string3 @ Put address of the start of the string in r1
+    MOV   r2, #0x3D    @ Length of string to print (in Hex).
+    SVC   0            @ Do the system call
+
 
 @ Force the exit of this program and return command to OS.
 
@@ -76,7 +85,7 @@ string1: .asciz "John Samuel Ingram\n"  @Length 0x0C; Labels end with a :
 string2: .asciz "jsi0004@uah.edu\n"
 
 .balign 4   @ Force a word boundry
-string3: .asciz "This is my first ARM Assembly program for CS309-01 Fall 2019\n"
+string3: .asciz "This is my first ARM Assembly program for CS309-01 Fall 2019\n" @Length 0x3D
 @  ^       ^
 @ Label It's in asci, and you should null terminate it
 
