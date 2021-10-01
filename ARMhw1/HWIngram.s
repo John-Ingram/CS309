@@ -7,7 +7,7 @@
 @    04-Mar-2019 Added comments to help with printf and svc calls.
 @    15-Sep-2019 Added comments on which registers are changed
 @           when there is a call to printf or SVC.
-@    For more history, see https://github.com/John-Ingram/CS309/commits/main/HWIngram.s
+@    For more history, see https://github.com/John-Ingram/CS309/commits/main/ARMhw1/HWIngram.s
 @
 @ Use these commands to assemble, link, run and debug the program
 @
