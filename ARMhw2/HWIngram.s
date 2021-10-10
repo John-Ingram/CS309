@@ -1,10 +1,7 @@
-@ Filename: student_inputC.s
-@ Author:   Kevin Preston
-@ Purpose:  Show CS309 and CS413 students how to read user inputs from
-@           the keyboard. Students are expected to learn ARM assembly in
-@           these courses not obscure details about C printf and scanf.
-@           In most cases it should be assumed the user provided a valid
-@           input. 
+@ Filename: HWIngram.s
+@ Author:   John Ingram
+@ Purpose:  Modify the program provided by the instructor to
+@           solve the ARM homework 2 assignment.
 @ 
 @ History: 
 @    Date       Purpose of change
@@ -16,6 +13,8 @@
 @   1-Oct-2019  Added code to check for user input errors from the 
 @               scanf call.   
 @  21-Feb-2019  Added comments about "%c" vs " %c" related to scanf.
+@               For history after the above date, see:
+@
 @
 @ Use these commands to assemble, link, run and debug this program:
 @    as -o student_inputC.o student_inputC.s
