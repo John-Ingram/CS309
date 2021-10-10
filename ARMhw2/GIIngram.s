@@ -1,4 +1,4 @@
-@ Filename: HWIngram.s
+@ Filename: GIIngram.s
 @ Author:   John Ingram
 @ Purpose:  Modify the program provided by the instructor to
 @           solve the ARM homework 2 assignment.
@@ -14,13 +14,13 @@
 @               scanf call.   
 @  21-Feb-2019  Added comments about "%c" vs " %c" related to scanf.
 @               For history after the above date, see:
-@
+@               https://github.com/John-Ingram/CS309/commits/main/ARMhw2/GIIngram.s
 @
 @ Use these commands to assemble, link, run and debug this program:
-@    as -o student_inputC.o student_inputC.s
-@    gcc -o student_inputC student_inputC.o
-@    ./student_inputC ;echo $?
-@    gdb --args ./student_inputC 
+@    as -o GIIngram.o GIIngram.s
+@    gcc -o GIIngram GIIngram.o
+@    ./GIIngram ;echo $?
+@    gdb --args ./GIIngram 
 
 @ ***********************************************************************
 @ The = (equal sign) is used in the ARM Assembler to get the address of a
@@ -70,6 +70,43 @@ get_input:
    bl  printf
    b   myexit @ leave the code. 
 
+
+@*******************
+char_prompt:
+@*******************
+
+@ Ask the user to enter a number.
+ 
+   ldr r0, =strCharInputPrompt @ Put the address of my string into the first parameter
+   bl  printf              @ Call the C printf to display input prompt. 
+
+@*******************
+get_char_input:
+@*******************
+
+@ Set up r0 with the address of input pattern.
+@ scanf puts the input value at the address stored in r1. We are going
+@ to use the address for our declared variable in the data section - intInput. 
+@ After the call to scanf the input is at the address pointed to by r1 which 
+@ in this case will be intInput. 
+
+   ldr r0, =charInputPattern  @ Setup to read in one number.
+   ldr r1, =intInput          @ load r1 with the address of where the
+                              @ input value will be stored. 
+   bl  scanf                  @ scan the keyboard.
+   cmp r0, #READERROR         @ Check for a read error.
+   beq readerror              @ If there was a read error go handle it. 
+   ldr r1, =intInput          @ Have to reload r1 because it gets wiped out. 
+   ldr r1, [r1]               @ Read the contents of intInput and store in r1 so that
+                              @ it can be printed. 
+
+@ Print the input out as a number.
+@ r1 contains the value input to keyboard. 
+
+   ldr r0, =strOutputChar
+   bl  printf
+   b   myexit @ leave the code. 
+
 @***********
 readerror:
 @***********
@@ -100,7 +137,13 @@ myexit:
 @ Declare the strings and data needed
 
 .balign 4
-strInputPrompt: .asciz "Input the number: \n"
+strNumInputPrompt: .asciz "Input the number: \n"
+
+.balign 4
+strCharInputPrompt: .asciz "Input the character: \n"
+
+.balign 4
+strOutputChar: .asciz "The character you entered was: %c\n"
 
 .balign 4
 strOutputNum: .asciz "The number value is: %d \n"
@@ -109,6 +152,9 @@ strOutputNum: .asciz "The number value is: %d \n"
 
 .balign 4
 numInputPattern: .asciz "%d"  @ integer format for read. 
+
+.balign 4
+charInputPattern: .asciz "%s"  @ character format for read.
 
 .balign 4
 strInputPattern: .asciz "%[^\n]" @ Used to clear the input buffer for invalid input. 
