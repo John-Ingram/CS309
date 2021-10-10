@@ -1,5 +1,7 @@
 @ Filename: GIIngram.s
 @ Author:   John Ingram
+@ Author email: jsi0004@uah.edu
+@ Course: CS309-01 Fall 2021
 @ Purpose:  Modify the program provided by the instructor to
 @           solve the ARM homework 2 assignment.
 @ 
@@ -40,7 +42,7 @@ prompt:
 
 @ Ask the user to enter a number.
  
-   ldr r0, =strInputPrompt @ Put the address of my string into the first parameter
+   ldr r0, =strNumInputPrompt @ Put the address of my string into the first parameter
    bl  printf              @ Call the C printf to display input prompt. 
 
 @*******************
@@ -68,8 +70,6 @@ get_input:
 
    ldr r0, =strOutputNum
    bl  printf
-   b   myexit @ leave the code. 
-
 
 @*******************
 char_prompt:
