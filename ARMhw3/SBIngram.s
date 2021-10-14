@@ -101,12 +101,12 @@ get_char_input:
     ldr r1, [r1]               @ Read the contents of intInput and store in r1 so that
                                @ it can be printed. 
 
-@ Print the input out as a number.
-@ r1 contains the value input to keyboard. 
 
-    ldr r0, =strOutputChar
-    bl  printf
-    b   myexit @ leave the code. 
+@*******************
+evaluate_char:
+@*******************
+    
+
 
 @***********
 readerror:
@@ -144,7 +144,10 @@ strNumInputPrompt: .asciz "Input the number: \n"
 strCharInputPrompt: .asciz "Input the character: \n"
 
 .balign 4
-strNumLessThan100: .asciz "The input number is less than 100.\n"    
+strNumLessThan100: .asciz "The input number is less than 100.\n"   
+
+.balign 4
+strNumGreaterThan100: .asciz "The input number is greater than or equal to 100.\n"
 
 @ Format pattern for scanf call.
 
