@@ -18,9 +18,11 @@
 
 .text
 .balign 4
-.equ READERROR, 0 @Used to check for scanf read error. 
+.equ READERROR, 0   @Used to check for scanf read error. 
+.equ NUMBER, 1      @Used to check for number.
+.equ CHARACTER, 2   @Used to check for character.
 
-.global main @ Have to use main because of C library uses. 
+.global main        @ Have to use main because of C library uses. 
 
 main:
 
@@ -42,6 +44,7 @@ get_input:
 @ to use the address for our declared variable in the data section - intInput. 
 @ After the call to scanf the input is at the address pointed to by r1 which 
 @ in this case will be intInput. 
+    ldr r5, #NUMBER          @ Set up r5 as a flag to indicate the type of input.
 
     ldr r0, =numInputPattern @ Setup to read in one number.
     ldr r1, =intInput        @ load r1 with the address of where the
@@ -57,18 +60,18 @@ get_input:
 @ r1 contains the value input to keyboard. 
     cmp r1, #100
     bge greater_than_100
-    ldr r0, =strNumLessThan100
-    b   print_str
+    ldr r0, =strNumLessThan
+    b   print_nums
 
 
 @*******************
 greater_than_100:
 @*******************
-    ldr r0, =strNumGreaterThan100 @ Load the address of the string to print.
-    b   print_str
+    ldr r0, =strNumGreaterThan @ Load the address of the string to print.
+    b   print_nums
 
 @*******************
-print_str:
+print_nums:
 @*******************
     bl printf                    @ Call the C printf to display the string.
 
@@ -90,6 +93,7 @@ get_char_input:
 @ to use the address for our declared variable in the data section - intInput. 
 @ After the call to scanf the input is at the address pointed to by r1 which 
 @ in this case will be intInput. 
+    ldr r5, #CHARACTER         @ Set up r5 as a flag to indicate the type of input.
 
     ldr r0, =charInputPattern  @ Setup to read in one number.
     ldr r1, =intInput          @ load r1 with the address of where the
@@ -105,8 +109,44 @@ get_char_input:
 @*******************
 evaluate_char:
 @*******************
-    
+@ If the value is smaller than 'A' 0x41 then it is a special character
+    cmp r1, #0x41
+    blt print_special
+@ If the value is smaller than or equal to 'Z' 0x5A then it is an uppercase letter
+    cmp r1, #0x5A
+    ble print_uppercase
+@ If the value is less than 'a' 0x61 then it is a special character
+    cmp r1, #0x61
+    blt print_special 
+@ If the value is less than or equal to 'z' 0x7A then it is a lowercase letter
+    cmp r1, #0x7A
+    ble print_lowercase
+@ If it made it here than it is a special character. 
+    b print_special
 
+@*******************
+print_lowercase:
+@*******************
+    ldr r0, =strLowerCaseLetter
+    b   print_chars
+
+@*******************
+print_uppercase:
+@*******************
+    ldr r0, =strUpperCaseLetter
+    b   print_chars
+
+@*******************
+print_special:
+@*******************
+    ldr r0, =strSpecialChar
+    b   print_chars
+
+@*******************
+print_chars:
+@*******************
+    bl printf
+    b myexit
 
 @***********
 readerror:
@@ -123,7 +163,10 @@ readerror:
 @  Not going to do anything with the input. This just cleans up the input buffer.  
 @  The input buffer should now be clear so get another input.
 
-    b prompt
+    cmp r5, #NUMBER          @ Check if the input was a number.
+    beq get_input            @ If it was a number go get another number.
+
+    b get_char_input         @ If it was a character go get another character.
 
 @*******************
 myexit:
@@ -144,10 +187,19 @@ strNumInputPrompt: .asciz "Input the number: \n"
 strCharInputPrompt: .asciz "Input the character: \n"
 
 .balign 4
-strNumLessThan100: .asciz "The input number is less than 100.\n"   
+strNumLessThan: .asciz "The input number is less than 100.\n"   
 
 .balign 4
-strNumGreaterThan100: .asciz "The input number is greater than or equal to 100.\n"
+strNumGreaterThan: .asciz "The input number is greater than or equal to 100.\n"
+
+.balign 4
+strLowerCaseLetter: .asciz "Lower case character entered.\n"
+
+.balign 4
+strUpperCaseLetter: .asciz "Upper case character entered.\n"
+
+.balign 4
+strSpecialChar: .asciz "Special character entered.\n"
 
 @ Format pattern for scanf call.
 
