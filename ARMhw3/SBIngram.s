@@ -19,8 +19,6 @@
 .text
 .balign 4
 .equ READERROR, 0   @Used to check for scanf read error. 
-.equ NUMBER, 1      @Used to check for number.
-.equ CHARACTER, 2   @Used to check for character.
 
 .global main        @ Have to use main because of C library uses. 
 
@@ -44,14 +42,13 @@ get_input:
 @ to use the address for our declared variable in the data section - intInput. 
 @ After the call to scanf the input is at the address pointed to by r1 which 
 @ in this case will be intInput. 
-    @ldr r5, #1          @ Set up r5 as a flag to indicate the type of input.
 
     ldr r0, =numInputPattern @ Setup to read in one number.
     ldr r1, =intInput        @ load r1 with the address of where the
                              @ input value will be stored. 
     bl  scanf                @ scan the keyboard.
     cmp r0, #READERROR       @ Check for a read error.
-    beq readerror            @ If there was a read error go handle it. 
+    beq numReaderror            @ If there was a read error go handle it. 
     ldr r1, =intInput        @ Have to reload r1 because it gets wiped out. 
     ldr r1, [r1]             @ Read the contents of intInput and store in r1 so that
                              @ it can be printed. 
@@ -93,14 +90,13 @@ get_char_input:
 @ to use the address for our declared variable in the data section - intInput. 
 @ After the call to scanf the input is at the address pointed to by r1 which 
 @ in this case will be intInput. 
-    @ldr r5, #2         @ Set up r5 as a flag to indicate the type of input.
 
     ldr r0, =charInputPattern  @ Setup to read in one number.
     ldr r1, =intInput          @ load r1 with the address of where the
                                @ input value will be stored. 
     bl  scanf                  @ scan the keyboard.
     cmp r0, #READERROR         @ Check for a read error.
-    beq readerror              @ If there was a read error go handle it. 
+    beq charReaderror              @ If there was a read error go handle it. 
     ldr r1, =intInput          @ Have to reload r1 because it gets wiped out. 
     ldr r1, [r1]               @ Read the contents of intInput and store in r1 so that
                                @ it can be printed. 
@@ -149,7 +145,7 @@ print_chars:
     b myexit
 
 @***********
-readerror:
+numReaderror:
 @***********
 @ Got a read error from the scanf routine. Clear out the input buffer then
 @ branch back for the user to enter a value. 
@@ -163,10 +159,19 @@ readerror:
 @  Not going to do anything with the input. This just cleans up the input buffer.  
 @  The input buffer should now be clear so get another input.
 
-    cmp r5, #NUMBER          @ Check if the input was a number.
-    beq get_input            @ If it was a number go get another number.
+    b get_input
 
-    b get_char_input         @ If it was a character go get another character.
+@***********
+charReaderror:
+@***********
+
+    ldr r0, =strInputPattern
+    ldr r1, =strInputError   @ Put address into r1 for read.
+    bl scanf                 @ scan the keyboard.
+@  Not going to do anything with the input. This just cleans up the input buffer.  
+@  The input buffer should now be clear so get another input.
+
+    b get_char_input
 
 @*******************
 myexit:
