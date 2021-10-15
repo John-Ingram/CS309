@@ -44,7 +44,7 @@ get_input:
 @ to use the address for our declared variable in the data section - intInput. 
 @ After the call to scanf the input is at the address pointed to by r1 which 
 @ in this case will be intInput. 
-    ldr r5, #1          @ Set up r5 as a flag to indicate the type of input.
+    @ldr r5, #1          @ Set up r5 as a flag to indicate the type of input.
 
     ldr r0, =numInputPattern @ Setup to read in one number.
     ldr r1, =intInput        @ load r1 with the address of where the
@@ -93,7 +93,7 @@ get_char_input:
 @ to use the address for our declared variable in the data section - intInput. 
 @ After the call to scanf the input is at the address pointed to by r1 which 
 @ in this case will be intInput. 
-    ldr r5, #2         @ Set up r5 as a flag to indicate the type of input.
+    @ldr r5, #2         @ Set up r5 as a flag to indicate the type of input.
 
     ldr r0, =charInputPattern  @ Setup to read in one number.
     ldr r1, =intInput          @ load r1 with the address of where the
