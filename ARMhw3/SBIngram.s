@@ -1,4 +1,4 @@
-@ Filename: SBIIngram.s
+@ Filename: SBIngram.s
 @ Author:   John Ingram
 @ Author email: jsi0004@uah.edu
 @ Course: CS309-01 Fall 2021
@@ -11,10 +11,10 @@
 @           Otherwise print: "Special character entered."
 @           Return control to the operating system. 
 @ Use these commands to assemble, link, run and debug this program:
-@    as -o SBIIngram.o SBIIngram.s
-@    gcc -o SBIIngram SBIIngram.o
-@    ./SBIIngram ;echo $?
-@    gdb --args ./SBIIngram 
+@    as -o SBIngram.o SBIngram.s
+@    gcc -o SBIngram SBIngram.o
+@    ./SBIngram ;echo $?
+@    gdb --args ./SBIngram 
 
 .text
 .balign 4
@@ -44,7 +44,7 @@ get_input:
 @ to use the address for our declared variable in the data section - intInput. 
 @ After the call to scanf the input is at the address pointed to by r1 which 
 @ in this case will be intInput. 
-    ldr r5, #NUMBER          @ Set up r5 as a flag to indicate the type of input.
+    ldr r5, 1          @ Set up r5 as a flag to indicate the type of input.
 
     ldr r0, =numInputPattern @ Setup to read in one number.
     ldr r1, =intInput        @ load r1 with the address of where the
@@ -93,7 +93,7 @@ get_char_input:
 @ to use the address for our declared variable in the data section - intInput. 
 @ After the call to scanf the input is at the address pointed to by r1 which 
 @ in this case will be intInput. 
-    ldr r5, #CHARACTER         @ Set up r5 as a flag to indicate the type of input.
+    ldr r5, 2         @ Set up r5 as a flag to indicate the type of input.
 
     ldr r0, =charInputPattern  @ Setup to read in one number.
     ldr r1, =intInput          @ load r1 with the address of where the
