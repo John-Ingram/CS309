@@ -105,9 +105,9 @@ confirm_number:
 
    @ Check to see if there is enough money on hand to dispense the requested amount.
    mov r2, r5
-   mul r2, #10
+   mul r2, r2, #10
    mov r3, r4
-   mul r3, #20
+   mul r3, r3, #20
    add r2, r3
    cmp r1, r2
    bgt insufficient_funds    @ If there is not enough money on hand, go handle it.
@@ -126,8 +126,8 @@ calculate_20s:
    mov r2, #0   @ r2 will be used to store the number of $20 bills to dispense.
    @r3 contains the amount of money on hand in 20$ bills.
    mov r3, r4
-   mul r3, #20
-   20_loop:
+   mul r3, r3, #20
+   twenty_loop:
       cmp r3, #0 @if the of 20$ bills is 0, then we are move to calculate the number of $10 bills.
       beq calculate_10s
       cmp r1, #20  @if the amount to dispense is less than 20$ move to calculate the number of $10 bills.
@@ -136,18 +136,20 @@ calculate_20s:
       sub r1, #20  @subtract 20$ from the amount to dispense.
       sub r4, #1   @subtract 1 $20 bill from the amount of $20 bills on hand.
       add r2, #1   @add 1 $20 bill to the number of $20 bills to dispense.
+      b twenty_loop
       
       
 
 calculate_10s:
    @calculate the number of $10 bills to dispense
    mov r7, #0   @r6 will be used to store the number of $10 bills to dispense.
-   10_loop:
+   ten_loop:
       cmp r1, #0   @if the amount to dispense is 0, then we are done.
+      beq successfull_withdrawl
       sub r1, #10  @subtract 10$ from the amount to dispense.
       sub r4, #1   @subtract 1 $10 bill from the amount of $10 bills on hand.
       add r7, #1   @add 1 $10 bill to the number of $10 bills to dispense.
-      b 10_loop
+      b ten_loop
 
 
 successfull_withdrawl:
