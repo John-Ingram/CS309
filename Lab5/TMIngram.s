@@ -109,11 +109,9 @@ confirm_number:
 
    @ Check to see if there is enough money on hand to dispense the requested amount.
    mov r2, r5
-   mov r10, r2
-   mul r2, r10, r8
+   mul r2, r8, r2
    mov r3, r4
-   mov r10, r3
-   mul r3, r10, r9
+   mul r3, r9, r3
    add r2, r3
    cmp r1, r2
    bgt insufficient_funds    @ If there is not enough money on hand, go handle it.
@@ -122,7 +120,7 @@ confirm_number:
    @ Check to see if the number is a multiple of 10.
    mod_loop:
       mov r2, r1 @ move the number into r2 so that I can be destructive.
-      sub r2, #10
+      sub r2, r2, #10 @ subtract 10 from the number.
       cmp r2, #0
       bgt mod_loop
       blt invalid_number
@@ -132,8 +130,7 @@ calculate_20s:
    mov r2, #0   @ r2 will be used to store the number of $20 bills to dispense.
    @r3 contains the amount of money on hand in 20$ bills.
    mov r3, r4
-   mov r10, r3
-   mul r3, r10, r9
+   mul r3, r9, r3
    twenty_loop:
       cmp r3, #0 @if the of 20$ bills is 0, then we are move to calculate the number of $10 bills.
       beq calculate_10s
@@ -172,11 +169,9 @@ successfull_withdrawl:
 end_or_not:
    @if there is no more money on hand, then end the program.
    mov r1, r5
-   mov r10, r1
-   mul r1, r10, r9
+   mul r1, r9, r1
    mov r2, r4
-   mov r10, r2
-   mul r2, r10, r8
+   mul r2, r8,r1
    add r1, r1, r2
    cmp r1, #0
    beq display_data
@@ -199,11 +194,10 @@ display_data:
 @Display Remaining balance on hand.
    ldr r0, =strRemainingBalancePattern
    mov r1, r5
-   mov r10, r1
-   mul r1, r10, r9
+   mul r1, r9,r1
    mov r2, r4
    mov r10, r2
-   mul r2, r10, r8
+   mul r2, r8, r2
    add r1, r1, r2
    mov r7, r1   @ r7 contains the value of the remaining balance for later use in the total distributions.
    bl  printf
