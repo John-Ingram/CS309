@@ -4,7 +4,7 @@
 #include <string>
 
 using namespace std;
-{
+
     //Display a welcome message and instructions on how to make a valid withdrawal
     void displayWelcomeMessage()
     {
@@ -35,7 +35,7 @@ using namespace std;
     }
 
     //Determine the number of 20s to be dispensed
-    int getNumberOfTwenties(int amount)
+    int getNumberOf20s(int amount)
     {
         int numberOfTwenties = amount / 20;
         return numberOfTwenties;
@@ -50,9 +50,9 @@ using namespace std;
     }
 
     //Correct the number of 10s and 20s to be dispensed if there are not enough notes to make the withdrawal
-    void correctNumberOfNotes(int &numberOf20s, int &numberOf10s)
+    void correctNumberOfNotes(int &numberOf20s, int &numberOf10s, int &remaining20s)
     {
-        numberof10s += 2*(numberof20s - remaining20s);
+        numberOf10s += 2*(numberOf20s - remaining20s);
                     numberOf20s = remaining20s;
                     remaining20s = 0;
     }
@@ -68,9 +68,9 @@ using namespace std;
         int numberOf20s;
         int numberOf10s;
         int withdrawlCount = 0;
-        bool continue = true;
+        bool cont = true;
     
-        while(continue)
+        while(cont)
         {
             //Display the welcome message
             displayWelcomeMessage();
@@ -85,7 +85,7 @@ using namespace std;
                 withdrawlCount++;
 
                 //Determine the number of 20s to be dispensed
-                numberOfTwenties = getNumberOfTwenties(amount);
+                numberOf20s = getNumberOf20s(amount);
 
                 //Determine the number of 10s to be dispensed
                 numberOf10s = getNumberOf10s(amount);
@@ -93,11 +93,11 @@ using namespace std;
                 //Correct the number of 10s and 20s if there are not enough
                 if (numberOf10s > remaining20s)
                 {
-                    correctNumberOfNotes(numberOf20s, numberOf10s);
+                    correctNumberOfNotes(numberOf20s, numberOf10s, remaining20s);
                 }
 
                 //Display the number of notes to be dispensed
-                cout << "You will receive " << numberOfTwenties << " 20s, " << numberOf10s << " 10s, " << endl;
+                cout << "You will receive " << numberOf20s << " 20s, " << numberOf10s << " 10s, " << endl;
             }
             else
             {
@@ -108,9 +108,9 @@ using namespace std;
             if (withdrawlCount == 10 || remainingCash == 0)
             {
                 cout << "Thank you for using the TMIngram program.\nYou have made " << withdrawlCount << " valid transactions.\n" << endl;
-                cout << 50-remaining20s << "20s, and" 50-remaining10s << "10s were distributed. That's"  20*(50-remaining20s)+10*(50-remaining10s) << "$\n" << endl;
-                cout << "There are " (20*remaining20s)+(10*remaining10s) << "$ remaining in the ATM." << endl;
-                continue = false;
+                cout << 50-remaining20s << "20s, and"<< 50-remaining10s << "10s were distributed. That's" << 20*(50-remaining20s)+10*(50-remaining10s) << "$\n" << endl;
+                cout << "There are" << (20*remaining20s)+(10*remaining10s) << "$ remaining in the ATM." << endl;
+                cont = false;
             }
 
             
@@ -118,4 +118,4 @@ using namespace std;
 
         return 0;
     }
-}
+
