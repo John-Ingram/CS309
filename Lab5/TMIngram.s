@@ -118,9 +118,9 @@ confirm_number:
 
 
    @ Check to see if the number is a multiple of 10.
-   mod_loop:
       mov r2, r1 @ move the number into r2 so that I can be destructive.
-      sub r2, r2, #10 @ subtract 10 from the number.
+   mod_loop:
+      sub r2, r2, #10 @ subtract 10 from the r2.
       cmp r2, #0
       beq calculate_20s
       bgt mod_loop
