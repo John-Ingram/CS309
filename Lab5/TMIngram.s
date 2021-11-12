@@ -284,7 +284,7 @@ strInsufficientFunds: .asciz "There is not enough money on hand to dispense the 
 strWithdrawal: .asciz "\n\nYou have withdrawn %d $20 bills and %d $10 bills\n"
 
 .balign 4
-strNumberOfBillsPattern: .asciz "Number of $10 bills: %d\nNumber of $20 bills: %d\n"
+strNumberOfBillsPattern: .asciz "Number of $20 bills: %d\nNumber of $10 bills: %d\n"
 
 .balign 4
 strRemainingBalancePattern: .asciz "Remaining balance on hand: $%d\n"
