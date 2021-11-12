@@ -264,6 +264,8 @@ myexit:
 @*******************
 @ End of my code. Force the exit and return control to OS
 
+   ldr r0, =strGoodbye
+
    mov r7, #0x01 @ SVC call to exit
    svc 0         @ Make the system call. 
 
@@ -279,6 +281,9 @@ strInvalidNumber: .asciz "The amount requested is invalid. Please enter a positi
 
 .balign 4
 strInsufficientFunds: .asciz "There is not enough money on hand to dispense the requested amount. Please try withdrawing less money.\n"
+
+.balign 4
+strGoodbye: .asciz "Thank you for using the TMIngram program.\n Please see the final statistics above.\n"
 
 .balign 4
 strWithdrawal: .asciz "\n\nYou have withdrawn %d $20 bills and %d $10 bills\n"
