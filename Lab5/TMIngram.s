@@ -152,7 +152,7 @@ calculate_10s:
       cmp r1, #0   @if the amount to dispense is 0, then we are done.
       beq successfull_withdrawl
       sub r1, #10  @subtract 10$ from the amount to dispense.
-      sub r4, #1   @subtract 1 $10 bill from the amount of $10 bills on hand.
+      sub r5, #1   @subtract 1 $10 bill from the amount of $10 bills on hand.
       add r7, #1   @add 1 $10 bill to the number of $10 bills to dispense.
       b ten_loop
 
