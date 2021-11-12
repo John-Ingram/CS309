@@ -62,6 +62,11 @@ mov r5, #50
 mov r6, #0
 mov r8, #10
 mov r9, #20
+%macro remaining20s r4 %endmacro
+%macro remaining10s r5 %endmacro
+%macro totalTransactions r6 %endmacro
+%macro ten r8 %endmacro
+%macro twenty r9 %endmacro
 
 @*******************
 prompt:
@@ -108,10 +113,10 @@ confirm_number:
    bgt invalid_number        @ If the number is greater than 200, go handle it.
 
    @ Check to see if there is enough money on hand to dispense the requested amount.
-   mov r2, r5
-   mul r2, r8, r2
-   mov r3, r4
-   mul r3, r9, r3
+   mov r2, remaining10s
+   mul r2, ten, r2
+   mov r3, remaining20s
+   mul r3, twenty, r3
    add r2, r3
    cmp r1, r2
    bgt insufficient_funds    @ If there is not enough money on hand, go handle it.
@@ -130,8 +135,8 @@ calculate_20s:
    @Calculate the number of $20 bills to dispense.
    mov r2, #0   @ r2 will be used to store the number of $20 bills to dispense.
    @r3 contains the amount of money on hand in 20$ bills.
-   mov r3, r4
-   mul r3, r9, r3
+   mov r3, remaining20s
+   mul r3, twenty, r3
    twenty_loop:
       cmp r3, #0 @if the of 20$ bills is 0, then we are move to calculate the number of $10 bills.
       beq calculate_10s
@@ -139,7 +144,7 @@ calculate_20s:
       blt calculate_10s
       sub r3, #20  @subtract 20$ from the amount of money on hand.
       sub r1, #20  @subtract 20$ from the amount to dispense.
-      sub r4, #1   @subtract 1 $20 bill from the amount of $20 bills on hand.
+      sub remaining20s, #1   @subtract 1 $20 bill from the amount of $20 bills on hand.
       add r2, #1   @add 1 $20 bill to the number of $20 bills to dispense.
       b twenty_loop
       
@@ -152,7 +157,7 @@ calculate_10s:
       cmp r1, #0   @if the amount to dispense is 0, then we are done.
       beq successfull_withdrawl
       sub r1, #10  @subtract 10$ from the amount to dispense.
-      sub r5, #1   @subtract 1 $10 bill from the amount of $10 bills on hand.
+      sub remaining10s, #1   @subtract 1 $10 bill from the amount of $10 bills on hand.
       add r7, #1   @add 1 $10 bill to the number of $10 bills to dispense.
       b ten_loop
 
@@ -169,10 +174,10 @@ successfull_withdrawl:
 
 end_or_not:
    @if there is no more money on hand, then end the program.
-   mov r1, r5
-   mul r1, r9, r1
-   mov r2, r4
-   mul r2, r8,r1
+   mov r1, remaining10s
+   mul r1, twenty, r1
+   mov r2, remaining20s
+   mul r2, ten,r1
    add r1, r1, r2
    cmp r1, #0
    beq display_data
@@ -188,17 +193,17 @@ display_data:
 @*******************
 @Display Inventory of $20 and $10 bills.
    ldr r0, =strNumberOfBillsPattern
-   mov r1, r4
-   mov r2, r5
+   mov r1, remaining20s
+   mov r2, remaining10s
    bl  printf
  
 @Display Remaining balance on hand.
    ldr r0, =strRemainingBalancePattern
-   mov r1, r5
-   mul r1, r9,r1
-   mov r2, r4
+   mov r1, remaining10s
+   mul r1, ten,r1
+   mov r2, remaining20s
    mov r10, r2
-   mul r2, r8, r2
+   mul r2, twenty, r2
    add r1, r1, r2
    mov r7, r1   @ r7 contains the value of the remaining balance for later use in the total distributions.
    bl  printf
