@@ -265,6 +265,7 @@ myexit:
 @ End of my code. Force the exit and return control to OS
 
    ldr r0, =strGoodbye
+   bl printf
 
    mov r7, #0x01 @ SVC call to exit
    svc 0         @ Make the system call. 
