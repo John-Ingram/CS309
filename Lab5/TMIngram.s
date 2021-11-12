@@ -62,11 +62,11 @@ mov r5, #50
 mov r6, #0
 mov r8, #10
 mov r9, #20
-%macro remaining20s r4 %endmacro
-%macro remaining10s r5 %endmacro
-%macro totalTransactions r6 %endmacro
-%macro ten r8 %endmacro
-%macro twenty r9 %endmacro
+.macro remaining20s r4 .endm
+.macro remaining10s r5 .endm
+.macro totalTransactions r6 .endm
+.macro ten r8 .endm
+.macro twenty r9 .endm
 
 @*******************
 prompt:
