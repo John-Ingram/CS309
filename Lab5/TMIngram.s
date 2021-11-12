@@ -122,6 +122,7 @@ confirm_number:
       mov r2, r1 @ move the number into r2 so that I can be destructive.
       sub r2, r2, #10 @ subtract 10 from the number.
       cmp r2, #0
+      beq calculate_20s
       bgt mod_loop
       blt invalid_number
 
@@ -280,7 +281,7 @@ strInvalidNumber: .asciz "The amount requested is invalid. Please enter a positi
 strInsufficientFunds: .asciz "There is not enough money on hand to dispense the requested amount. Please try withdrawing less money.\n"
 
 .balign 4
-strWithdrawal: .asciz "You have withdrawn %d $20 bills and %d $10 bills\n"
+strWithdrawal: .asciz "\n\nYou have withdrawn %d $20 bills and %d $10 bills\n"
 
 .balign 4
 strNumberOfBillsPattern: .asciz "Number of $10 bills: %d\nNumber of $20 bills: %d\n"
@@ -292,7 +293,7 @@ strRemainingBalancePattern: .asciz "Remaining balance on hand: $%d\n"
 strNumberOfTransactionsPattern: .asciz "Number of transactions: %d\n"
 
 .balign 4
-strTotalDistributionsPattern: .asciz "Total distributions made so far: $%d\n"
+strTotalDistributionsPattern: .asciz "Total distributions made so far: $%d\n\n"
 
 
 @ Format pattern for scanf call.
